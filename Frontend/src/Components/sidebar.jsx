@@ -1,40 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaTachometerAlt, FaUsers, FaPlusSquare, FaChartBar, FaSignOutAlt, FaHome, FaUtensils, FaCaretDown, FaCaretUp } from 'react-icons/fa';
-import logo from '../Images/candy.png'; 
+import { FaTachometerAlt, FaUsers, FaPlusSquare, FaChartBar, FaSignOutAlt, FaHome, FaCaretDown, FaCaretUp, FaFileAlt, FaClipboardList } from 'react-icons/fa'; // Added icons
+import logo from '../Images/candy.png';
 
 const SidebarContainer = styled.div`
-  position: relative; /* Position relative for the pseudo-element */
+  position: relative;
   width: 220px;
   height: 200vh;
   background-image: url('https://www.sweets4me.co.uk/cdn/shop/collections/traditionalloose_0203cf46-429a-4e70-81ef-f2aa5bd6ec8a.jpg?v=1634897951&width=1080');
-  background-size: cover; /* Ensures the image covers the entire background */
-  background-position: center; /* Centers the background image */
+  background-size: cover;
+  background-position: center;
   padding: 20px;
   flex-direction: column;
-  color: #ecf0f1; /* Light text color */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  color: #ecf0f1;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 
-  /* Overlay */
   &::before {
     content: '';
-    position: absolute; /* Position absolute to cover the whole container */
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8); /* Black with 50% opacity */
-    z-index: 1; /* Ensure the overlay is on top */
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1;
   }
 
-  /* Ensure the text appears above the overlay */
   > * {
-    position: relative; /* Position elements relative to the sidebar */
-    z-index: 2; /* Ensure text is above the overlay */
+    position: relative;
+    z-index: 2;
   }
 `;
-
 
 const LogoContainer = styled.div`
   display: flex;
@@ -43,7 +40,7 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 180px; 
+  width: 180px;
   height: auto;
   margin-bottom: 10px;
 `;
@@ -53,11 +50,11 @@ const Menu = styled.div`
 `;
 
 const MenuSectionTitle = styled.h4`
-  margin: 20px 0 0 0; /* Top margin only */
+  margin: 20px 0 0 0;
   color: #fff;
   cursor: pointer;
-    font-size: 18px;
-    margin-bottom: 20px;
+  font-size: 18px;
+  margin-bottom: 20px;
 `;
 
 const MenuItem = styled.div`
@@ -71,7 +68,7 @@ const MenuItem = styled.div`
   transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: #34495e; /* Darker background on hover */
+    background-color: #34495e;
     color: #fff;
   }
 `;
@@ -82,13 +79,12 @@ const Icon = styled.div`
 `;
 
 const ExpandableMenu = styled.div`
-  padding-left: 20px; 
+  padding-left: 20px;
   margin-bottom: 40px;
 `;
 
 const Sidebar = () => {
   const [isStaffMenuOpen, setStaffMenuOpen] = useState(true);
-  const [isMenuManagementOpen, setMenuManagementOpen] = useState(true);
 
   return (
     <SidebarContainer>
@@ -111,13 +107,13 @@ const Sidebar = () => {
             </Link>
             <Link to="/all-attendance" style={{ textDecoration: 'none', color: 'inherit' }}>
               <MenuItem>
-                <Icon><FaChartBar /></Icon>
+                <Icon><FaClipboardList /></Icon> {/* Updated icon */}
                 View Attendances
               </MenuItem>
             </Link>
             <Link to="/view-leaves" style={{ textDecoration: 'none', color: 'inherit' }}>
               <MenuItem>
-                <Icon><FaChartBar /></Icon>
+                <Icon><FaFileAlt /></Icon> {/* Updated icon */}
                 View Leaves
               </MenuItem>
             </Link>
@@ -131,7 +127,6 @@ const Sidebar = () => {
         )}
       </Menu>
 
-
       {/* Home and Sign Out */}
       <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <MenuItem>
@@ -139,7 +134,7 @@ const Sidebar = () => {
           Home
         </MenuItem>
       </Link>
-      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to="/logout" style={{ textDecoration: 'none', color: 'inherit' }}>
         <MenuItem>
           <Icon><FaSignOutAlt /></Icon>
           Sign Out

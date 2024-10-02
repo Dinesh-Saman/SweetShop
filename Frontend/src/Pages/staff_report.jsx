@@ -190,7 +190,7 @@ const StaffReport = () => {
             </Table>
           </TableContainer>
           <Box className={`${classes.buttonsContainer} no-print-button`}>
-            <Button variant="contained" color="secondary" onClick={handleDownloadPDF} style={{backgroundColor:'orange', fontWeight:'600'}}>
+            <Button variant="contained" color="secondary" onClick={handleDownloadPDF} style={{backgroundColor:'#CC5500', fontWeight:'600'}}>
               Download PDF
             </Button>
           </Box>

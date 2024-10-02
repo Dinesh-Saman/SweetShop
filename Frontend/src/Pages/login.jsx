@@ -101,7 +101,7 @@ const Login = () => {
           <Typography
             variant="h4"
             gutterBottom
-            style={{ fontFamily: 'cursive', fontWeight: 'bold', color: 'purple', textAlign: 'center' }}
+            style={{ fontWeight: 'bold', color: 'green', textAlign: 'center' }}
           >
             Login
           </Typography>
@@ -134,7 +134,7 @@ const Login = () => {
               color="primary"
               size="large"
               type="submit"
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 16 , backgroundColor:'#CC5500'}}
             >
               Login
             </Button>

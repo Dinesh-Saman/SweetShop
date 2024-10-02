@@ -92,7 +92,7 @@ const ApplyLeave = () => {
           value={reason}
           onChange={(e) => setReason(e.target.value)}
         />
-        <Button fullWidth variant="contained" color="primary" size="large" type="submit" style={{ marginTop: 16, backgroundColor:'orange' }}>
+        <Button fullWidth variant="contained" color="primary" size="large" type="submit" style={{ marginTop: 16, backgroundColor:'#CC5500' }}>
           Apply
         </Button>
       </form>
