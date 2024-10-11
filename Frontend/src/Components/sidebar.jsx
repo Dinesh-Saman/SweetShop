@@ -99,6 +99,12 @@ const Sidebar = () => {
         </MenuSectionTitle>
         {isStaffMenuOpen && (
           <ExpandableMenu>
+            <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <MenuItem>
+                <Icon><FaUsers /></Icon>
+                Staff Register
+              </MenuItem>
+            </Link>
             <Link to="/view-employee" style={{ textDecoration: 'none', color: 'inherit' }}>
               <MenuItem>
                 <Icon><FaUsers /></Icon>

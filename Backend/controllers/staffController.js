@@ -8,7 +8,7 @@ require('dotenv').config();
 
 exports.addNewStaff = async (req, res) => {
   try {
-    const { staffId, name, dob, address, position, department, contact, email, password } = req.body;
+    const { staffId, name, dob, age, address, position, department, contact, email, password } = req.body;
 
     // Log the received data for debugging
     console.log(req.body);
@@ -20,6 +20,7 @@ exports.addNewStaff = async (req, res) => {
     if (!staffId) missingFields.push("staffId");
     if (!name) missingFields.push("name");
     if (!dob) missingFields.push("dob");
+    if (!age) missingFields.push("age"); // Check for the age field
     if (!address) missingFields.push("address");
     if (!position) missingFields.push("position");
     if (!department) missingFields.push("department");
@@ -39,11 +40,12 @@ exports.addNewStaff = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create a new staff member with the hashed password
+    // Create a new staff member with the hashed password and age
     const newStaff = new Staff({
       staffId,
       name,
       dob,
+      age, // Add age to the new staff object
       address,
       position,
       department,
@@ -65,7 +67,7 @@ exports.addNewStaff = async (req, res) => {
 
     // Email content
     const mailOptions = {
-      from:  process.env.EMAIL_USER, 
+      from: process.env.EMAIL_USER, 
       to: email,              
       subject: 'Welcome to Our Team',
       text: `Dear ${name},\n\nWelcome to our team! Your position is ${position} in the ${department} department. Feel free to reach out for any assistance.\n\nBest regards,\nCandy Shop`
@@ -130,10 +132,10 @@ exports.getStaffById = async (req, res) => {
 // Update a staff member
 exports.updateStaff = async (req, res) => {
   const staffId = req.params.id;
-  const { name, dob, address, position, department, contact, email } = req.body;
+  const { name, dob, age, address, position, department, contact, email } = req.body;
 
   // Validate inputs
-  if (!(name && dob && address && position && department && contact && email)) {
+  if (!(name && dob && age && address && position && department && contact && email)) {
     return res.status(400).json({ message: "All inputs are required" });
   }
 
@@ -151,6 +153,7 @@ exports.updateStaff = async (req, res) => {
       {
         name,
         dob,
+        age, // Include the age in the update
         address,
         position,
         department,
@@ -164,7 +167,7 @@ exports.updateStaff = async (req, res) => {
     } else if (result.nModified > 0) {
       // Send email notification
       const emailSubject = 'Staff Member Updated';
-      const emailText = `The details of a staff member have been updated:\n\nName: ${name}\nPosition: ${position}\nDepartment: ${department}\nContact: ${contact}\nEmail: ${email}`;
+      const emailText = `The details of a staff member have been updated:\n\nName: ${name}\nPosition: ${position}\nDepartment: ${department}\nContact: ${contact}\nEmail: ${email}\nAge: ${age}`; // Add age to email content
       await sendEmail(emailSubject, emailText);
 
       return res.status(200).json({ message: "Staff member updated successfully!" });

@@ -64,9 +64,9 @@ const ViewStaff = () => {
   const classes = useStyles();
   const [staffData, setStaffData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchCriteria, setSearchCriteria] = useState("staffName");
+  const [searchCriteria, setSearchCriteria] = useState("name");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -121,7 +121,7 @@ const ViewStaff = () => {
       <Header />
       <Box display="flex">
         <Sidebar />
-        <Box className={classes.contentContainer}>
+        <Box className={classes.contentContainer}  style={{ overflowX: 'auto' }}>
           <Box
             alignItems="center"
             justifyContent="space-between"
@@ -141,8 +141,10 @@ const ViewStaff = () => {
                   onChange={handleCriteriaChange}
                   label="Search By"
                 >
-                  <MenuItem value="staffName">Name</MenuItem>
+                  <MenuItem value="name">Name</MenuItem>
                   <MenuItem value="position">Position</MenuItem>
+                  <MenuItem value="age">Age</MenuItem>
+                  <MenuItem value="dob">DOB</MenuItem>
                   <MenuItem value="department">Department</MenuItem>
                   <MenuItem value="contact">Contact</MenuItem>
                 </Select>
@@ -156,54 +158,65 @@ const ViewStaff = () => {
               />
             </Box>
           </Box>
-          <TableContainer component={Paper} className={classes.tableContainer}>
-            <Table>
-              <TableHead>
-                <TableRow style={{ backgroundColor: 'purple', color: 'white' }}>
-                  <TableCell style={{ color: 'white' }}>ID</TableCell>
-                  <TableCell style={{ color: 'white' }}>Name</TableCell>
-                  <TableCell style={{ color: 'white' }}>Position</TableCell>
-                  <TableCell style={{ color: 'white' }}>Department</TableCell>
-                  <TableCell style={{ color: 'white' }}>Contact</TableCell>
-                  <TableCell style={{ color: 'white' }}>Update</TableCell>
-                  <TableCell style={{ color: 'white' }}>Delete</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {paginatedStaff.map((staff) => (
-                  <TableRow key={staff._id}>
-                    <TableCell>{staff.staffId}</TableCell>
-                    <TableCell>{staff.name}</TableCell>
-                    <TableCell>{staff.position}</TableCell>
-                    <TableCell>{staff.department}</TableCell>
-                    <TableCell>{staff.contact}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        style={{backgroundColor:'orange', borderRadius:'100px'}}
-                        onClick={() => handleUpdate(staff._id)}
-                      >
-                        Update
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                        style={{borderRadius:'100px'}}
-                        onClick={() => handleDelete(staff._id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
+          <TableContainer component={Paper} className={classes.tableContainer} >
+            <div style={{ overflowX: 'auto' }}>
+              <Table>
+                <TableHead>
+                  <TableRow style={{ backgroundColor: 'purple', color: 'white' }}>
+                    <TableCell style={{ color: 'white' }}>ID</TableCell>
+                    <TableCell style={{ color: 'white' }}>Name</TableCell>
+                    <TableCell style={{ color: 'white' }}>DOB</TableCell>
+                    <TableCell style={{ color: 'white' }}>Age</TableCell>
+                    <TableCell style={{ color: 'white' }}>Position</TableCell>
+                    <TableCell style={{ color: 'white' }}>Department</TableCell>
+                    <TableCell style={{ color: 'white' }}>Contact</TableCell>
+                    <TableCell style={{ color: 'white' }}>Address</TableCell>
+                    <TableCell style={{ color: 'white' }}>Email</TableCell>
+                    <TableCell style={{ color: 'white' }}>Update</TableCell>
+                    <TableCell style={{ color: 'white' }}>Delete</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {paginatedStaff.map((staff) => (
+                    <TableRow key={staff._id}>
+                      <TableCell>{staff.staffId}</TableCell>
+                      <TableCell>{staff.name}</TableCell>
+                      <TableCell>{staff.dob.substring(0, 10)}</TableCell>
+                      <TableCell>{staff.age}</TableCell>
+                      <TableCell>{staff.position}</TableCell>
+                      <TableCell>{staff.department}</TableCell>
+                      <TableCell>{staff.contact}</TableCell>
+                      <TableCell>{staff.address}</TableCell>
+                      <TableCell>{staff.email}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          style={{ backgroundColor: 'orange', borderRadius: '100px' }}
+                          onClick={() => handleUpdate(staff._id)}
+                        >
+                          Update
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          style={{ borderRadius: '100px' }}
+                          onClick={() => handleDelete(staff._id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </TableContainer>
+
           <CustomPagination
             count={filteredStaff.length}
             page={page}

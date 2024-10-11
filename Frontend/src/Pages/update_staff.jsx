@@ -7,6 +7,7 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import MainHeader from '../Components/customer_header'; 
 import Footer from '../Components/customer_footer';
+import RegisterImg from '../Images/sweet3.png';
 
 const UpdateStaff = () => {
   const { id } = useParams(); // Get the staff ID from the URL
@@ -22,6 +23,7 @@ const UpdateStaff = () => {
     email: '' // Added email field
   });
   const [errors, setErrors] = useState({}); // State for error messages
+  const [age, setAge] = useState(''); // State for calculated age
 
   // Fetch the staff data when the component mounts
   useEffect(() => {
@@ -29,6 +31,7 @@ const UpdateStaff = () => {
       try {
         const response = await axios.get(`http://localhost:3001/staff/get-staff/${id}`);
         setStaffData(response.data);
+        calculateAge(response.data.dob); // Calculate age after fetching data
       } catch (error) {
         console.error("There was an error fetching the staff data!", error);
       }
@@ -37,12 +40,25 @@ const UpdateStaff = () => {
     fetchStaffData();
   }, [id]);
 
+  // Calculate age based on DOB
+  const calculateAge = (dob) => {
+    const birthDate = new Date(dob);
+    const ageDiff = new Date() - birthDate;
+    const calculatedAge = Math.floor(ageDiff / (1000 * 60 * 60 * 24 * 365.25)); // Approximate age in years
+    setAge(calculatedAge); // Set the calculated age
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setStaffData({
       ...staffData,
       [name]: value,
     });
+
+    // Recalculate age whenever DOB is changed
+    if (name === 'dob') {
+      calculateAge(value);
+    }
   };
 
   const validateFields = () => {
@@ -122,6 +138,7 @@ const UpdateStaff = () => {
                   name="staffId"
                   value={staffData.staffId}
                   onChange={handleChange}
+                  disabled
                 />
                 <TextField
                   fullWidth
@@ -144,8 +161,17 @@ const UpdateStaff = () => {
                   name="dob"
                   value={staffData.dob.substring(0, 10)}
                   onChange={handleChange}
-                  error={!!errors.dob} // Show error if exists
-                  helperText={errors.dob} // Display error message
+                  error={!!errors.dob}
+                  helperText={errors.dob}
+                />
+                <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Age"
+                  variant="outlined"
+                  value={age} 
+                  InputProps={{ readOnly: true }} 
+                  disabled
                 />
                 <TextField
                   fullWidth
@@ -222,28 +248,26 @@ const UpdateStaff = () => {
               </Box>
             </Box>
 
-            {/* Image Section */}
-            <Box
-              style={{
-                flex: 1,
-                textAlign: 'center',
-                padding: '20px',
-                margin: '15px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <img
-                src="https://images.pexels.com/photos/8147953/pexels-photo-8147953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Sample"
-                style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '8px' }}
-              />
-            </Box>
+              {/* Image Section */}
+              <Box
+                flex={1}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                style={{
+                  padding: '10px',
+                  height: '100%', 
+                  marginLeft:'20px',
+                  marginTop: '40px'
+                }}
+              >
+                <img src={RegisterImg} alt="Registration" style={{ maxWidth: '100%', height: 'auto', borderRadius: 8 }} />
+              </Box>
+            
           </Box>
         </Box>
       </Box>
-      <Footer /> {/* Add footer here */}
+      <Footer />
     </Box>
   );
 };

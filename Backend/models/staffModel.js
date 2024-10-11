@@ -16,6 +16,10 @@ const staffSchema = new Schema({
     type: Date,
     required: true,
   },
+  age: {
+    type: Number,  // Added age attribute
+    required: true,
+  },
   address: {
     type: String,
     required: true,
@@ -40,13 +44,12 @@ const staffSchema = new Schema({
   password: {
     type: String,
     required: true,
-  role: {
-      type: String,
-      enum: ['ADMIN', 'USER'],
-      default: 'USER',
-    }
   },
-
+  role: {
+    type: String,
+    enum: ['ADMIN', 'USER'],
+    default: 'USER',
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Staff', staffSchema);
